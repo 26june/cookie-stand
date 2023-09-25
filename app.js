@@ -54,7 +54,7 @@ const seattle = {
 
     for (let i = 0; i < this.cookieSales.length; i++) {
       let li = document.createElement("li");
-      li.textContent = this.cookieSales[i];
+      li.textContent = `${this.cookieSales[i]} cookies`;
       ul.appendChild(li);
     }
   },
@@ -104,7 +104,7 @@ const tokyo = {
 
     for (let i = 0; i < this.cookieSales.length; i++) {
       let li = document.createElement("li");
-      li.textContent = this.cookieSales[i];
+      li.textContent = `${this.cookieSales[i]} cookies`;
       ul.appendChild(li);
     }
   },
