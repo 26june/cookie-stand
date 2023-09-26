@@ -17,35 +17,35 @@ const serviceHours = [
 
 const salesDataArray = [
   {
-    location: "Seattle",
+    storeLocation: "Seattle",
     minCustomer: 23,
     maxCustomer: 65,
     avgCookiesPerCustomer: 6.3,
   },
 
   {
-    location: "Tokyo",
+    storeLocation: "Tokyo",
     minCustomer: 3,
     maxCustomer: 24,
     avgCookiesPerCustomer: 1.2,
   },
 
   {
-    location: "Dubai",
+    storeLocation: "Dubai",
     minCustomer: 11,
     maxCustomer: 38,
     avgCookiesPerCustomer: 3.7,
   },
 
   {
-    location: "Paris",
+    storeLocation: "Paris",
     minCustomer: 20,
     maxCustomer: 38,
     avgCookiesPerCustomer: 2.3,
   },
 
   {
-    location: "Lima",
+    storeLocation: "Lima",
     minCustomer: 2,
     maxCustomer: 16,
     avgCookiesPerCustomer: 4.6,
@@ -71,39 +71,100 @@ City.prototype.randomNumGen = function () {
     //cant have 0.2 of cookie so round up (or should it go down? idk)
     let cookiesSold = Math.ceil(randomCustomer * this.avgCookiesPerCustomer);
 
-    this.cookieSales[i] = `${serviceHours[i]}: ${cookiesSold}`;
+    this.cookieSales[i] = cookiesSold;
 
     this.totalSales += cookiesSold;
   }
-
-  this.cookieSales.push(`Total: ${this.totalSales}`);
 };
 
 City.prototype.displayOnPage = function () {
   this.randomNumGen();
-  let salesData = document.getElementById("salesData");
-  let h2 = document.createElement("h2");
-  h2.textContent = this.loc;
-  salesData.appendChild(h2);
 
-  let ul = document.createElement("ul");
-  salesData.appendChild(ul);
+  let tr = document.createElement("tr");
+  let thBefore = document.createElement("td");
+  thBefore.textContent = this.loc;
+  tr.appendChild(thBefore);
 
-  for (let i = 0; i < this.cookieSales.length; i++) {
-    let li = document.createElement("li");
-    li.textContent = `${this.cookieSales[i]} cookies`;
-    ul.appendChild(li);
-  }
+  this.cookieSales.forEach((element) => {
+    let th = document.createElement("td");
+    th.textContent = element;
+    tr.appendChild(th);
+  });
+
+  let thTotal = document.createElement("td");
+  thTotal.textContent = this.totalSales;
+  tr.appendChild(thTotal);
+
+  documentTable.appendChild(tr);
 };
 
+const documentTable = document.getElementById("salesTable");
+
+function createTableHeader() {
+  let tr = document.createElement("tr");
+
+  let thBefore = document.createElement("th");
+  thBefore.textContent = "Location";
+  tr.appendChild(thBefore);
+
+  serviceHours.forEach((element) => {
+    let th = document.createElement("th");
+    th.textContent = element;
+    tr.appendChild(th);
+  });
+
+  let thTotal = document.createElement("th");
+  thTotal.textContent = "Total";
+  tr.appendChild(thTotal);
+
+  documentTable.appendChild(tr);
+}
+
+function createTableFooter() {
+  let tr = document.createElement("tr");
+
+  let thBefore = document.createElement("td");
+  thBefore.textContent = "Totals";
+  tr.appendChild(thBefore);
+
+  serviceHours.forEach((element, k) => {
+    let th = document.createElement("td");
+    th.textContent = totals[k];
+    tr.appendChild(th);
+  });
+
+  let thTotal = document.createElement("td");
+  thTotal.textContent = totals[serviceHours.length];
+  tr.appendChild(thTotal);
+
+  documentTable.appendChild(tr);
+}
+
+const totals = {};
+
+createTableHeader();
+
 for (let i = 0; i < salesDataArray.length; i++) {
-  const { location, minCustomer, maxCustomer, avgCookiesPerCustomer } =
+  const { storeLocation, minCustomer, maxCustomer, avgCookiesPerCustomer } =
     salesDataArray[i];
 
-  const city = new City(
-    location,
+  const newCity = new City(
+    storeLocation,
     minCustomer,
     maxCustomer,
     avgCookiesPerCustomer
-  ).displayOnPage();
+  );
+
+  //calculates total for each hour - check for undefined first
+  newCity.displayOnPage();
+  newCity.cookieSales.forEach((e, j) => {
+    totals[j] === undefined ? (totals[j] = e) : (totals[j] += e);
+  });
+
+  //calculates grand total - check for undefined first
+  totals[newCity.cookieSales.length] === undefined
+    ? (totals[newCity.cookieSales.length] = newCity.totalSales)
+    : (totals[newCity.cookieSales.length] += newCity.totalSales);
 }
+
+createTableFooter();
