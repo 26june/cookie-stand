@@ -15,248 +15,95 @@ const serviceHours = [
   "7pm",
 ];
 
-const seattle = {
-  location: "Seattle",
-  minCustomer: 23,
-  maxCustomer: 65,
-  avgCookiesPerCustomer: 6.3,
-  cookieSales: [],
-  totalSales: 0,
-
-  randomNumGen: function () {
-    for (let i = 0; i < serviceHours.length; i++) {
-      let randomCustomer = Math.floor(
-        Math.random() * (this.maxCustomer - this.minCustomer + 1) +
-          this.minCustomer
-      );
-
-      //cant have 0.2 of cookie so round up (or should it go down? idk)
-      let cookiesSold = Math.ceil(randomCustomer * this.avgCookiesPerCustomer);
-
-      this.cookieSales[i] = `${serviceHours[i]}: ${cookiesSold}`;
-
-      this.totalSales += cookiesSold;
-    }
-
-    this.cookieSales.push(`Total: ${this.totalSales}`);
+const salesDataArray = [
+  {
+    location: "Seattle",
+    minCustomer: 23,
+    maxCustomer: 65,
+    avgCookiesPerCustomer: 6.3,
   },
 
-  displayData: function () {
-    let salesData = document.getElementById("salesData");
-    let h2 = document.createElement("h2");
-    h2.textContent = this.location;
-    salesData.appendChild(h2);
-
-    let ul = document.createElement("ul");
-    salesData.appendChild(ul);
-
-    for (let i = 0; i < this.cookieSales.length; i++) {
-      let li = document.createElement("li");
-      li.textContent = `${this.cookieSales[i]} cookies`;
-      ul.appendChild(li);
-    }
+  {
+    location: "Tokyo",
+    minCustomer: 3,
+    maxCustomer: 24,
+    avgCookiesPerCustomer: 1.2,
   },
+
+  {
+    location: "Dubai",
+    minCustomer: 11,
+    maxCustomer: 38,
+    avgCookiesPerCustomer: 3.7,
+  },
+
+  {
+    location: "Paris",
+    minCustomer: 20,
+    maxCustomer: 38,
+    avgCookiesPerCustomer: 2.3,
+  },
+
+  {
+    location: "Lima",
+    minCustomer: 2,
+    maxCustomer: 16,
+    avgCookiesPerCustomer: 4.6,
+  },
+];
+
+function City(loc, minCustomer, maxCustomer, avgCookiesPerCustomer) {
+  this.loc = loc;
+  this.minCustomer = minCustomer;
+  this.maxCustomer = maxCustomer;
+  this.avgCookiesPerCustomer = avgCookiesPerCustomer;
+  this.cookieSales = [];
+  this.totalSales = 0;
+}
+
+City.prototype.randomNumGen = function () {
+  for (let i = 0; i < serviceHours.length; i++) {
+    let randomCustomer = Math.floor(
+      Math.random() * (this.maxCustomer - this.minCustomer + 1) +
+        this.minCustomer
+    );
+
+    //cant have 0.2 of cookie so round up (or should it go down? idk)
+    let cookiesSold = Math.ceil(randomCustomer * this.avgCookiesPerCustomer);
+
+    this.cookieSales[i] = `${serviceHours[i]}: ${cookiesSold}`;
+
+    this.totalSales += cookiesSold;
+  }
+
+  this.cookieSales.push(`Total: ${this.totalSales}`);
 };
 
-seattle.randomNumGen();
-seattle.displayData();
+City.prototype.displayOnPage = function () {
+  this.randomNumGen();
+  let salesData = document.getElementById("salesData");
+  let h2 = document.createElement("h2");
+  h2.textContent = this.loc;
+  salesData.appendChild(h2);
 
-const tokyo = {
-  location: "Tokyo",
-  minCustomer: 3,
-  maxCustomer: 24,
-  avgCookiesPerCustomer: 1.2,
-  cookieSales: [],
-  totalSales: 0,
+  let ul = document.createElement("ul");
+  salesData.appendChild(ul);
 
-  randomNumGen: function () {
-    //Generate random number of customers
-    for (let i = 0; i < serviceHours.length; i++) {
-      let randomCustomer = Math.floor(
-        Math.random() * (this.maxCustomer - this.minCustomer + 1) +
-          this.minCustomer
-      );
-
-      //cant have 0.2 of cookie so round up (or should it go down? idk)
-      let cookiesSold = Math.ceil(randomCustomer * this.avgCookiesPerCustomer);
-
-      //
-      this.cookieSales[i] = `${serviceHours[i]}: ${cookiesSold}`;
-
-      this.totalSales += cookiesSold;
-    }
-
-    this.cookieSales.push(`Total: ${this.totalSales}`);
-
-    return this.cookieSales;
-  },
-
-  displayData: function () {
-    let salesData = document.getElementById("salesData");
-    let h2 = document.createElement("h2");
-    h2.textContent = this.location;
-    salesData.appendChild(h2);
-
-    let ul = document.createElement("ul");
-    salesData.appendChild(ul);
-
-    for (let i = 0; i < this.cookieSales.length; i++) {
-      let li = document.createElement("li");
-      li.textContent = `${this.cookieSales[i]} cookies`;
-      ul.appendChild(li);
-    }
-  },
+  for (let i = 0; i < this.cookieSales.length; i++) {
+    let li = document.createElement("li");
+    li.textContent = `${this.cookieSales[i]} cookies`;
+    ul.appendChild(li);
+  }
 };
 
-tokyo.randomNumGen();
-tokyo.displayData();
+for (let i = 0; i < salesDataArray.length; i++) {
+  const { location, minCustomer, maxCustomer, avgCookiesPerCustomer } =
+    salesDataArray[i];
 
-const dubai = {
-  location: "Dubai",
-  minCustomer: 11,
-  maxCustomer: 38,
-  avgCookiesPerCustomer: 3.7,
-  cookieSales: [],
-  totalSales: 0,
-
-  randomNumGen: function () {
-    //Generate random number of customers
-    for (let i = 0; i < serviceHours.length; i++) {
-      let randomCustomer = Math.floor(
-        Math.random() * (this.maxCustomer - this.minCustomer + 1) +
-          this.minCustomer
-      );
-
-      //cant have 0.2 of cookie so round up (or should it go down? idk)
-      let cookiesSold = Math.ceil(randomCustomer * this.avgCookiesPerCustomer);
-
-      //
-      this.cookieSales[i] = `${serviceHours[i]}: ${cookiesSold}`;
-
-      this.totalSales += cookiesSold;
-    }
-
-    this.cookieSales.push(`Total: ${this.totalSales}`);
-
-    return this.cookieSales;
-  },
-
-  displayData: function () {
-    let salesData = document.getElementById("salesData");
-    let h2 = document.createElement("h2");
-    h2.textContent = this.location;
-    salesData.appendChild(h2);
-
-    let ul = document.createElement("ul");
-    salesData.appendChild(ul);
-
-    for (let i = 0; i < this.cookieSales.length; i++) {
-      let li = document.createElement("li");
-      li.textContent = `${this.cookieSales[i]} cookies`;
-      ul.appendChild(li);
-    }
-  },
-};
-
-dubai.randomNumGen();
-dubai.displayData();
-
-const paris = {
-  location: "Paris",
-  minCustomer: 20,
-  maxCustomer: 38,
-  avgCookiesPerCustomer: 2.3,
-  cookieSales: [],
-  totalSales: 0,
-
-  randomNumGen: function () {
-    //Generate random number of customers
-    for (let i = 0; i < serviceHours.length; i++) {
-      let randomCustomer = Math.floor(
-        Math.random() * (this.maxCustomer - this.minCustomer + 1) +
-          this.minCustomer
-      );
-
-      //cant have 0.2 of cookie so round up (or should it go down? idk)
-      let cookiesSold = Math.ceil(randomCustomer * this.avgCookiesPerCustomer);
-
-      //
-      this.cookieSales[i] = `${serviceHours[i]}: ${cookiesSold}`;
-
-      this.totalSales += cookiesSold;
-    }
-
-    this.cookieSales.push(`Total: ${this.totalSales}`);
-
-    return this.cookieSales;
-  },
-
-  displayData: function () {
-    let salesData = document.getElementById("salesData");
-    let h2 = document.createElement("h2");
-    h2.textContent = this.location;
-    salesData.appendChild(h2);
-
-    let ul = document.createElement("ul");
-    salesData.appendChild(ul);
-
-    for (let i = 0; i < this.cookieSales.length; i++) {
-      let li = document.createElement("li");
-      li.textContent = `${this.cookieSales[i]} cookies`;
-      ul.appendChild(li);
-    }
-  },
-};
-
-paris.randomNumGen();
-paris.displayData();
-
-const lima = {
-  location: "Lima",
-  minCustomer: 2,
-  maxCustomer: 16,
-  avgCookiesPerCustomer: 4.6,
-  cookieSales: [],
-  totalSales: 0,
-
-  randomNumGen: function () {
-    //Generate random number of customers
-    for (let i = 0; i < serviceHours.length; i++) {
-      let randomCustomer = Math.floor(
-        Math.random() * (this.maxCustomer - this.minCustomer + 1) +
-          this.minCustomer
-      );
-
-      //cant have 0.2 of cookie so round up (or should it go down? idk)
-      let cookiesSold = Math.ceil(randomCustomer * this.avgCookiesPerCustomer);
-
-      //
-      this.cookieSales[i] = `${serviceHours[i]}: ${cookiesSold}`;
-
-      this.totalSales += cookiesSold;
-    }
-
-    this.cookieSales.push(`Total: ${this.totalSales}`);
-
-    return this.cookieSales;
-  },
-
-  displayData: function () {
-    let salesData = document.getElementById("salesData");
-    let h2 = document.createElement("h2");
-    h2.textContent = this.location;
-    salesData.appendChild(h2);
-
-    let ul = document.createElement("ul");
-    salesData.appendChild(ul);
-
-    for (let i = 0; i < this.cookieSales.length; i++) {
-      let li = document.createElement("li");
-      li.textContent = `${this.cookieSales[i]} cookies`;
-      ul.appendChild(li);
-    }
-  },
-};
-
-lima.randomNumGen();
-lima.displayData();
+  const city = new City(
+    location,
+    minCustomer,
+    maxCustomer,
+    avgCookiesPerCustomer
+  ).displayOnPage();
+}
