@@ -39,8 +39,6 @@ const seattle = {
     }
 
     this.cookieSales.push(`Total: ${this.totalSales}`);
-
-    return this.cookieSales;
   },
 
   displayData: function () {
