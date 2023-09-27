@@ -81,7 +81,7 @@ City.prototype.displayOnPage = function () {
   this.randomNumGen();
 
   let tr = document.createElement("tr");
-  let thBefore = document.createElement("td");
+  let thBefore = document.createElement("th");
   thBefore.textContent = this.loc;
   tr.appendChild(thBefore);
 
@@ -123,7 +123,7 @@ function createTableHeader() {
 function createTableFooter() {
   let tr = document.createElement("tr");
 
-  let thBefore = document.createElement("td");
+  let thBefore = document.createElement("th");
   thBefore.textContent = "Totals";
   tr.appendChild(thBefore);
 
