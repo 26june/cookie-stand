@@ -11,20 +11,34 @@
   <body>
     <div class="table-container">
       <table id="salesTable"></table>
-      <form id="newStoreForm">
-        <fieldset>
-          <legend>New Store Form</legend>
-          <label for="storeLocation">Store Location</label>
-          <input id="storeLocation" name="storeLocation" type="text" />
-          <label for="minCust">Mininum Number of Customers</label>
-          <input id="minCust" name="storeData" type="number" />
-          <label for="maxCust">Maximum Number of Customers</label>
-          <input id="maxCust" name="storeData" type="number" />
-          <label for="avgCookie">Average Number of Cookies Sold</label>
-          <input id="avgCookie" name="storeData" type="number" />
-          <button type="submit">Add Store</button>
-        </fieldset>
-      </form>
     </div>
+    <form id="newStoreForm">
+      <fieldset>
+        <legend>New Store Form</legend>
+        <label for="storeLocation">Store Location</label>
+        <input
+          id="storeLocation"
+          name="storeLocation"
+          type="text"
+          autocomplete="off"
+        />
+        <span class="formGap"></span>
+        Number of Customers
+        <label for="minCust">Mininum</label>
+        <input id="minCust" name="storeData" type="number" autocomplete="off" />
+        <label for="maxCust">Maximum</label>
+        <input id="maxCust" name="storeData" type="number" autocomplete="off" />
+        <span class="formGap"></span>
+        <label for="avgCookie">Average Number of Cookies Sold</label>
+        <input
+          id="avgCookie"
+          name="storeData"
+          type="number"
+          autocomplete="off"
+        />
+        <span class="formGap"></span>
+        <button type="submit">Add Store</button>
+      </fieldset>
+    </form>
   </body>
 </html>
