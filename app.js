@@ -176,14 +176,28 @@ const newStoreForm = document.getElementById("newStoreForm");
 
 newStoreForm.addEventListener("submit", function (e) {
   e.preventDefault();
-  let newStoreObj = {
-    storeLocation: e.target.storeLocation.value,
-    minCustomer: e.target.minCust.value,
-    maxCustomer: e.target.maxCust.value,
-    avgCookiesPerCustomer: e.target.avgCookie.value,
-  };
-  salesDataArray.push(newStoreObj);
-  documentTable.deleteRow(-1);
-  fillTable(salesDataArray.length - 1);
-  createTableFooter();
+
+  let { storeLocation, minCust, maxCust, avgCookie } = e.target;
+  console.log(!minCust.value);
+
+  if (
+    storeLocation.value &&
+    minCust.value &&
+    maxCust.value &&
+    avgCookie.value
+  ) {
+    let newStoreObj = {
+      storeLocation: storeLocation.value,
+      minCustomer: minCust.value,
+      maxCustomer: maxCust.value,
+      avgCookiesPerCustomer: avgCookie.value,
+    };
+
+    salesDataArray.push(newStoreObj);
+    documentTable.deleteRow(-1);
+    fillTable(salesDataArray.length - 1);
+    createTableFooter();
+  } else {
+    alert("!!");
+  }
 });
