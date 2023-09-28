@@ -144,9 +144,9 @@ const totals = {};
 
 createTableHeader();
 
-for (let i = 0; i < salesDataArray.length; i++) {
+function fillTable(salesDataArrayIndex) {
   const { storeLocation, minCustomer, maxCustomer, avgCookiesPerCustomer } =
-    salesDataArray[i];
+    salesDataArray[salesDataArrayIndex];
 
   const newCity = new City(
     storeLocation,
@@ -167,4 +167,23 @@ for (let i = 0; i < salesDataArray.length; i++) {
     : (totals[newCity.cookieSales.length] += newCity.totalSales);
 }
 
+for (let i = 0; i < salesDataArray.length; i++) {
+  fillTable(i);
+}
 createTableFooter();
+
+const newStoreForm = document.getElementById("newStoreForm");
+
+newStoreForm.addEventListener("submit", function (e) {
+  e.preventDefault();
+  let newStoreObj = {
+    storeLocation: e.target.storeLocation.value,
+    minCustomer: e.target.minCust.value,
+    maxCustomer: e.target.maxCust.value,
+    avgCookiesPerCustomer: e.target.avgCookie.value,
+  };
+  salesDataArray.push(newStoreObj);
+  documentTable.deleteRow(-1);
+  fillTable(salesDataArray.length - 1);
+  createTableFooter();
+});
