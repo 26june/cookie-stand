@@ -201,3 +201,5 @@ newStoreForm.addEventListener("submit", function (e) {
     alert("!!");
   }
 });
+
+//Test for laptop push access
